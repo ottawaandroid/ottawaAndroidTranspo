@@ -1,0 +1,3 @@
+[submodule "libs/transit_service"]
+	path = libs/transit_service
+	url = git@github.com:csaunders/transit_service.git
