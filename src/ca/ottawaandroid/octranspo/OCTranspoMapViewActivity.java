@@ -7,6 +7,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.Button;
+import android.widget.GridLayout;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -113,10 +116,22 @@ public class OCTranspoMapViewActivity extends MapActivity {
         protected boolean onTap(int index) {
             // show a view here that lets you select your bus stop
             // On bus stop selection, add nearby bus markers to overlay
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            GridLayout stops_view = (GridLayout) inflater.inflate(R.layout.stops_dialog, null);
+
+            // Get busses that stop at this stop
+            // Loop over them and add an icon for each
+            // For now add a dummy
+            for (int i = 151; i < 160; i++) {
+                Button bus_button = (Button) inflater.inflate(R.layout.stop_item, null);
+                bus_button.setText(String.valueOf(i));
+                stops_view.addView(bus_button);
+            }
             OverlayItem item = icmOverlays.get(index);
             AlertDialog.Builder dialog = new AlertDialog.Builder(icmContext);
+            dialog.setInverseBackgroundForced(true);
             dialog.setTitle(item.getTitle());
-            dialog.setMessage(item.getSnippet());
+            dialog.setView(stops_view);
             dialog.show();
             return true;
         }
